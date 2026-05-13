@@ -246,7 +246,7 @@ export default function Hero() {
               שעובד עם{" "}
               <span className="gradient-text">AI</span>
               <br />
-              — זה שלך
+              זה שלך
             </motion.h1>
 
             <motion.p
@@ -273,7 +273,7 @@ export default function Hero() {
               className="text-slate-400 text-lg leading-relaxed mb-6 max-w-lg"
             >
               אוטומציה מלאה, סוכני AI בעברית, וחיבור לכל מערכות העסק שלך.
-              תוצאות אמיתיות תוך ימים — לא חודשים.
+              תוצאות אמיתיות תוך ימים, לא חודשים.
             </motion.p>
 
             {/* Key benefits */}

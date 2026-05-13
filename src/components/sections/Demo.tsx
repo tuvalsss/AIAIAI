@@ -39,7 +39,7 @@ const WA_SYSTEM = `אתה בוט WhatsApp חכם של עסק ישראלי. הש�
 2. הצע קביעת תור כשרלוונטי
 3. כלול אמוג'י מתאים
 4. הצג את עצמך כ-AI שזמין 24/7
-אל תציג רשימות ארוכות. ענה כמו WhatsApp — קצר, ידידותי, מקצועי.`;
+אל תציג רשימות ארוכות. ענה כמו WhatsApp: קצר, ידידותי, מקצועי.`;
 
 type Msg = { from: "user" | "bot"; text: string };
 
@@ -52,7 +52,7 @@ const QUICK_REPLIES = [
 
 function WhatsAppDemo() {
   const [messages, setMessages] = useState<Msg[]>([
-    { from: "bot", text: "שלום! 👋 אני AIAI בוט — עוזר AI חכם שעובד 24/7.\nשלח לי הודעה ותראה איך AI אמיתי עונה לך!" },
+    { from: "bot", text: "שלום! 👋 אני הבוט של 3AI, עוזר AI חכם שעובד 24/7.\nשלח לי הודעה ותראה איך AI אמיתי עונה לך!" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -100,7 +100,7 @@ function WhatsAppDemo() {
           <Bot className="w-6 h-6 text-cyan-400" />
         </div>
         <div className="flex-1">
-          <div className="font-bold text-white text-sm">AIAI בוט — AI אמיתי</div>
+          <div className="font-bold text-white text-sm">3AI בוט - AI אמיתי</div>
           <div className="text-[11px] text-green-300 flex items-center gap-1">
             <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             מחובר ל-Claude AI
@@ -427,7 +427,7 @@ function LeadScorerDemo() {
 // ─── AI Content Generator Demo ─────────────────────────────────────
 const CONTENT_SYSTEM = `אתה מומחה לשיווק דיגיטלי ו-AI לעסקים ישראליים.
 כאשר מבקשים ממך לכתוב תוכן, תכתוב בדיוק את הפורמט המבוקש, בעברית שיווקית חדה.
-אל תוסיף הסברים — רק את התוכן עצמו.`;
+אל תוסיף הסברים. רק את התוכן עצמו.`;
 
 const CONTENT_TYPES = [
   { id: "whatsapp", label: "הודעת WhatsApp", icon: MessageSquare, color: "text-green-400",
@@ -541,7 +541,7 @@ function ContentDemo() {
             {/* Mock WhatsApp preview */}
             <div className="bg-[#075E54] px-3 py-2 flex items-center gap-2">
               <Bot className="w-4 h-4 text-cyan-300" />
-              <span className="text-xs text-white font-medium">{contentType.label} — תצוגה מקדימה</span>
+              <span className="text-xs text-white font-medium">{contentType.label} - תצוגה מקדימה</span>
             </div>
             <div className="p-3" style={{ background: "#0f1923" }}>
               <div className="msg-received inline-block max-w-full p-3 text-sm text-white">
@@ -635,14 +635,14 @@ export default function Demo() {
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-full px-4 py-2 mb-4">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <Wifi className="w-4 h-4 text-green-400" />
-            <span className="text-sm text-green-300 font-medium">דמו חי עם Claude AI — תנסה עכשיו</span>
+            <span className="text-sm text-green-300 font-medium">דמו חי עם Claude AI. תנסה עכשיו</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
             AI שעובד{" "}
             <span className="gradient-text">בזמן אמת</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            לא סימולציה — AI אמיתי שמגיב לך עכשיו. תכתוב, תשאל, ותראה בעצמך.
+            לא סימולציה. AI אמיתי שמגיב לך עכשיו. תכתוב, תשאל, ותראה בעצמך.
           </p>
         </motion.div>
 
@@ -693,7 +693,7 @@ export default function Demo() {
                 <div className="w-3 h-3 rounded-full bg-green-500/80" />
               </div>
               <span className="text-xs text-slate-400 mx-auto font-medium">
-                {TABS.find((t) => t.id === activeTab)?.label} — AIAIAI
+                {TABS.find((t) => t.id === activeTab)?.label} - 3AI
               </span>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -735,7 +735,7 @@ export default function Demo() {
             className="mt-4 text-center"
           >
             <p className="text-xs text-slate-500">
-              מופעל על ידי <span className="text-cyan-400 font-medium">Claude AI</span> של Anthropic — אותה טכנולוגיה שנבנה עבור העסק שלך
+              מופעל על ידי <span className="text-cyan-400 font-medium">Claude AI</span> של Anthropic. אותה טכנולוגיה שנבנה עבור העסק שלך
             </p>
           </motion.div>
         </motion.div>

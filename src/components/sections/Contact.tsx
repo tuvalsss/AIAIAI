@@ -49,7 +49,7 @@ export default function Contact() {
             <span className="gradient-text">דבר איתנו</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            ייעוץ ראשון חינם — נבין את הצרכים שלך ונציג פתרון מותאם תוך 24 שעות
+            ייעוץ ראשון חינם. נבין את הצרכים שלך ונציג פתרון מותאם תוך 24 שעות
           </p>
         </motion.div>
 
@@ -198,7 +198,7 @@ export default function Contact() {
                 <div>
                   <div className="font-bold text-white text-lg">שלח הודעת WhatsApp</div>
                   <div className="text-green-400 font-medium" dir="ltr">050-869-9828</div>
-                  <div className="text-slate-500 text-sm">זמין 24/7 — עונים תוך דקות</div>
+                  <div className="text-slate-500 text-sm">זמין 24/7, עונים תוך דקות</div>
                 </div>
               </a>
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "מדיניות פרטיות | AIAIAI",
-  description: "מדיניות הפרטיות של AIAIAI — כיצד אנו אוספים, משתמשים ומגנים על המידע שלך.",
+  description: "מדיניות הפרטיות של AIAIAI - כיצד אנו אוספים, משתמשים ומגנים על המידע שלך.",
 };
 
 export default function PrivacyPage() {
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-white mb-3">2. איזה מידע אנו אוספים</h2>
           <ul className="list-disc list-inside space-y-2 text-slate-400">
             <li><strong className="text-white">מידע שאתה מוסר:</strong> שם, טלפון, אימייל ותוכן הפנייה שלך דרך טפסי יצירת הקשר באתר.</li>
-            <li><strong className="text-white">מידע שנאסף אוטומטית:</strong> כתובת IP, סוג דפדפן, עמודים שביקרת בהם ומשך הביקור — לצורך ניתוח ושיפור האתר.</li>
+            <li><strong className="text-white">מידע שנאסף אוטומטית:</strong> כתובת IP, סוג דפדפן, עמודים שביקרת בהם ומשך הביקור - לצורך ניתוח ושיפור האתר.</li>
             <li><strong className="text-white">מידע מהדמו:</strong> הטקסט שתכתוב בדמו ה-AI עשוי לעבור עיבוד על-ידי מודל AI חיצוני (Claude/Anthropic). אין לשתף בדמו מידע אישי רגיש.</li>
           </ul>
         </section>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
           <p className="text-slate-400">אנו לא מוכרים, משכירים או מעבירים מידע אישי לצדדים שלישיים, למעט:</p>
           <ul className="list-disc list-inside space-y-2 text-slate-400 mt-2">
             <li>ספקי שירות הכרחיים (אחסון, ניתוח, שליחת מיילים) הפועלים מטעמנו בלבד</li>
-            <li>Anthropic (מפעילת Claude AI) לצורך עיבוד שאילתות הדמו — לפי מדיניות הפרטיות שלהם</li>
+            <li>Anthropic (מפעילת Claude AI) לצורך עיבוד שאילתות הדמו - לפי מדיניות הפרטיות שלהם</li>
             <li>כאשר נדרש על-פי חוק</li>
           </ul>
         </section>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="text-lg font-bold text-white mb-3">6. אבטחת מידע</h2>
-          <p className="text-slate-400">אנו מיישמים אמצעי אבטחה תקניים — הצפנת SSL, גישה מוגבלת למידע, וגיבויים סדירים. עם זאת, אין מערכת שהיא עמידה בפני כל איום.</p>
+          <p className="text-slate-400">אנו מיישמים אמצעי אבטחה תקניים - הצפנת SSL, גישה מוגבלת למידע, וגיבויים סדירים. עם זאת, אין מערכת שהיא עמידה בפני כל איום.</p>
         </section>
 
         <section>

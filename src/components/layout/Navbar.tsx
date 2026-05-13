@@ -47,7 +47,7 @@ function AboutModal({ onClose }: { onClose: () => void }) {
         <div className="text-center">
           <h2 className="text-xl font-black text-white mb-2">הופכים עסקים ישראליים לעסקים חכמים</h2>
           <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
-            AIAIAI היא חברת AI ישראלית שמתמחה בבניית פתרונות אוטומציה ובינה מלאכותית לעסקים — מהקטנים ועד הגדולים.
+            AIAIAI היא חברת AI ישראלית שמתמחה בבניית פתרונות אוטומציה ובינה מלאכותית לעסקים, מהקטנים ועד הגדולים.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ function AboutModal({ onClose }: { onClose: () => void }) {
             { icon: MapPin, label: "ממוקמים", value: "תל אביב, ישראל", color: "text-cyan-400" },
             { icon: Users, label: "עובדים עם", value: "עסקים קטנים וגדולים", color: "text-green-400" },
             { icon: Building2, label: "לקוחות", value: "500+ עסקים פעילים", color: "text-violet-400" },
-            { icon: Heart, label: "מאז", value: "2022 — 3 שנות ניסיון", color: "text-pink-400" },
+            { icon: Heart, label: "מאז", value: "2022, 3 שנות ניסיון", color: "text-pink-400" },
           ].map((item) => (
             <div key={item.label} className="glass rounded-xl p-3 border border-white/10 flex items-center gap-3">
               <item.icon className={`w-5 h-5 flex-shrink-0 ${item.color}`} />
@@ -77,7 +77,7 @@ function AboutModal({ onClose }: { onClose: () => void }) {
           </h3>
           <div className="space-y-2">
             {[
-              "עסקים קטנים ובינוניים — מספרות, קליניקות, מסעדות, חנויות",
+              "עסקים קטנים ובינוניים: מספרות, קליניקות, מסעדות, חנויות",
               "חברות SaaS וסטארטאפים שצריכים אוטומציה מהירה",
               "עסקי נדל\"ן, עורכי דין, רואי חשבון ומשרדי שירותים",
               "חברות גדולות שצריכות AI פנימי לצוות שלהן",
@@ -109,7 +109,7 @@ function AboutModal({ onClose }: { onClose: () => void }) {
           className="w-full btn-primary flex items-center justify-center gap-2 py-3"
         >
           <Zap className="w-4 h-4" />
-          בואו נדבר — ייעוץ ראשון חינם
+          בואו נדבר, ייעוץ ראשון חינם
         </button>
       </div>
     </div>
