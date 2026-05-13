@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
@@ -44,9 +45,9 @@ export default function LoadingScreen() {
               transition={{ duration: 0.8, type: "spring" }}
               className="relative"
             >
-              <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-2xl"
+              <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-2xl"
                 style={{ boxShadow: "0 0 60px rgba(255,255,255,0.25)" }}>
-                <span className="text-3xl font-black text-black tracking-tight leading-none">AI</span>
+                <Image src="/logo.png" alt="3AI" width={96} height={96} className="w-full h-full object-cover" priority />
               </div>
               {/* Orbit rings */}
               {[1, 2].map((ring) => (
