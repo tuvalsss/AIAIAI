@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useAbout } from "@/components/layout/AboutContext";
 
@@ -131,10 +132,8 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-md">
-                <span className="text-[13px] font-black text-black tracking-tight leading-none">AI</span>
-              </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Image src="/logo.png" alt="3AI לוגו" width={44} height={44} className="rounded-xl" />
               <div>
                 <div className="text-lg font-black text-white">AI<span className="text-cyan-400">AI</span>AI</div>
                 <div className="text-[10px] text-slate-400">פתרונות AI</div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X, Zap, MapPin, Users, Building2, Heart, Star, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -35,10 +36,8 @@ function AboutModal({ onClose }: { onClose: () => void }) {
       <div className="relative h-32 bg-gradient-to-br from-[#0d1b3e] via-[#1e1040] to-[#030712] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="relative z-10 text-center">
-          <div className="text-3xl font-black text-white tracking-wider mb-1">
-            AI<span className="text-cyan-400">AI</span>AI
-          </div>
+        <div className="relative z-10 text-center flex flex-col items-center gap-2">
+          <Image src="/logo.png" alt="3AI לוגו" width={56} height={56} className="rounded-2xl shadow-lg" />
           <div className="text-xs text-slate-400 font-medium">פתרונות AI לעסקים בישראל</div>
         </div>
       </div>
@@ -167,13 +166,11 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <motion.div
-              className="flex items-center gap-3 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
               whileHover={{ scale: 1.02 }}
               onClick={() => isHome ? window.scrollTo({ top: 0, behavior: "smooth" }) : router.push("/")}
             >
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-md">
-                <span className="text-[13px] font-black text-black tracking-tight leading-none">AI</span>
-              </div>
+              <Image src="/logo.png" alt="3AI לוגו" width={48} height={48} className="rounded-xl" priority />
               <div className="text-right">
                 <div className="text-lg font-black text-white leading-none tracking-wider">
                   AI<span className="text-cyan-400">AI</span>AI

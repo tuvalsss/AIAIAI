@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Heebo, Rubik } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -35,6 +36,10 @@ export const metadata: Metadata = {
   creator: "AIAIAI",
   publisher: "AIAIAI",
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     type: "website",
     locale: "he_IL",
@@ -57,6 +62,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl" className="dark">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18158835511"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18158835511');
+          `}
+        </Script>
+      </head>
       <body suppressHydrationWarning className={`${heebo.variable} ${rubik.variable} font-heebo bg-[#030712] text-slate-100 antialiased`}>
         {children}
       </body>
