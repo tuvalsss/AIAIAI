@@ -58,8 +58,10 @@ function WhatsAppDemo() {
   const [loading, setLoading] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
+    if (!mountedRef.current) { mountedRef.current = true; return; }
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 

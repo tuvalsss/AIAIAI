@@ -14,7 +14,7 @@ export default function HomePage() {
     <AboutProvider>
       <ClientOnlyComponents />
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero />
         <Services />
         <Demo />

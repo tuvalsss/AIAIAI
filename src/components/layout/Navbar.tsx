@@ -152,6 +152,8 @@ export default function Navbar() {
       </Modal>
 
       <motion.nav
+        role="navigation"
+        aria-label="תפריט ראשי"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -166,9 +168,13 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <motion.div
+              role="button"
+              tabIndex={0}
+              aria-label="לעמוד הבית"
               className="flex items-center gap-2 cursor-pointer"
               whileHover={{ scale: 1.02 }}
               onClick={() => isHome ? window.scrollTo({ top: 0, behavior: "smooth" }) : router.push("/")}
+              onKeyDown={(e) => e.key === "Enter" && (isHome ? window.scrollTo({ top: 0, behavior: "smooth" }) : router.push("/"))}
             >
               <Image src="/logo.png" alt="3AI לוגו" width={48} height={48} className="rounded-xl" priority />
               <div className="text-right">
@@ -221,6 +227,9 @@ export default function Navbar() {
             <button
               className="md:hidden p-2 text-slate-300 hover:text-cyan-400 transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "סגור תפריט" : "פתח תפריט"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
             >
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -231,6 +240,7 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}

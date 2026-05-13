@@ -77,6 +77,12 @@ export default function RootLayout({
         </Script>
       </head>
       <body suppressHydrationWarning className={`${heebo.variable} ${rubik.variable} font-heebo bg-[#030712] text-slate-100 antialiased`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:font-bold"
+        >
+          דלג לתוכן הראשי
+        </a>
         {children}
       </body>
     </html>
