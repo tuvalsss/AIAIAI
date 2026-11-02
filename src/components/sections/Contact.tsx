@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
-import { Phone, Mail, MessageSquare, Send, CheckCircle, Zap, MapPin, ShieldCheck } from "lucide-react";
+import { Phone, MessageSquare, Send, CheckCircle, Zap, MapPin, ShieldCheck } from "lucide-react";
 import { trackLead } from "@/lib/analytics";
 
 const businessTypes = [
@@ -11,15 +11,14 @@ const businessTypes = [
   "חנות / eCommerce", "שירותי תחזוקה", "חברת תוכנה / SaaS", "אחר",
 ];
 
-type FormState = { name: string; phone: string; email: string; business: string; message: string; website: string };
-const EMPTY: FormState = { name: "", phone: "", email: "", business: "", message: "", website: "" };
+type FormState = { name: string; phone: string; business: string; message: string; website: string };
+const EMPTY: FormState = { name: "", phone: "", business: "", message: "", website: "" };
 
 function whatsappLink(form: FormState) {
   const lines = [
     "שלום, שלחתי פנייה דרך האתר 3ai.co.il:",
     `שם: ${form.name}`,
     `טלפון: ${form.phone}`,
-    form.email ? `אימייל: ${form.email}` : "",
     form.business ? `סוג עסק: ${form.business}` : "",
     form.message ? `על העסק: ${form.message}` : "",
   ].filter(Boolean);
@@ -162,20 +161,6 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="c-email" className="block text-sm text-slate-400 mb-2">אימייל</label>
-                  <input
-                    id="c-email"
-                    type="email"
-                    autoComplete="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className={field}
-                    placeholder="you@example.com"
-                    dir="ltr"
-                  />
-                </div>
-
-                <div>
                   <label htmlFor="c-business" className="block text-sm text-slate-400 mb-2">סוג עסק</label>
                   <select
                     id="c-business"
@@ -285,19 +270,6 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a
-                href="mailto:info@3ai.co.il"
-                className="flex items-center gap-4 glass glass-hover rounded-2xl p-5 border border-violet-500/20 group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Mail className="w-7 h-7 text-violet-400" />
-                </div>
-                <div>
-                  <div className="font-bold text-white text-lg">שלח מייל</div>
-                  <div className="text-violet-400 font-medium">info@3ai.co.il</div>
-                  <div className="text-slate-500 text-sm">מגיבים תוך 24 שעות</div>
-                </div>
-              </a>
             </div>
 
             <div className="glass rounded-2xl p-6 border border-yellow-500/20 bg-yellow-500/5">

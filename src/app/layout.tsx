@@ -3,7 +3,7 @@ import { Heebo } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, EMAIL, KEYWORDS, PHONE_E164, SITE_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, KEYWORDS, PHONE_E164, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
@@ -77,7 +77,6 @@ const organizationJsonLd = {
       image: `${SITE_URL}/og-square.jpg`,
       description: DEFAULT_DESCRIPTION,
       telephone: PHONE_E164,
-      email: EMAIL,
       address: { "@type": "PostalAddress", addressLocality: "Tel Aviv", addressCountry: "IL" },
       areaServed: { "@type": "Country", name: "Israel" },
       priceRange: "₪₪",

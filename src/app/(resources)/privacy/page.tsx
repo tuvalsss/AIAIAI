@@ -30,13 +30,13 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="text-lg font-bold text-white mb-3">1. מי אנחנו</h2>
-          <p>AIAIAI היא חברה ישראלית המספקת פתרונות בינה מלאכותית לעסקים, הממוקמת בתל אביב, ישראל. ניתן לפנות אלינו בכתובת info@3ai.co.il.</p>
+          <p>AIAIAI היא חברה ישראלית המספקת פתרונות בינה מלאכותית לעסקים, הממוקמת בתל אביב, ישראל. ניתן לפנות אלינו בטלפון או בוואטסאפ: 050-869-9828.</p>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-white mb-3">2. איזה מידע אנו אוספים</h2>
           <ul className="list-disc list-inside space-y-2 text-slate-400">
-            <li><strong className="text-white">מידע שאתה מוסר:</strong> שם, טלפון, אימייל ותוכן הפנייה שלך דרך טפסי יצירת הקשר באתר.</li>
+            <li><strong className="text-white">מידע שאתה מוסר:</strong> שם, טלפון ותוכן הפנייה שלך דרך טפסי יצירת הקשר באתר.</li>
             <li><strong className="text-white">מידע שנאסף אוטומטית:</strong> כתובת IP, סוג דפדפן, עמודים שביקרת בהם ומשך הביקור - לצורך ניתוח ושיפור האתר.</li>
             <li><strong className="text-white">מידע מהדמו:</strong> הטקסט שתכתוב בדמו ה-AI עשוי לעבור עיבוד על-ידי מודל AI חיצוני (Claude/Anthropic). אין לשתף בדמו מידע אישי רגיש.</li>
           </ul>
@@ -81,14 +81,14 @@ export default function PrivacyPage() {
             <li>לבקש מחיקת המידע שלך</li>
             <li>להתנגד לשימוש במידע לשיווק</li>
           </ul>
-          <p className="mt-3">לכל בקשה: <a href="mailto:info@3ai.co.il" className="text-cyan-400 hover:underline">info@3ai.co.il</a></p>
+          <p className="mt-3">לכל בקשה: <a href="https://wa.me/972508699828" className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">WhatsApp</a> או טלפון <a href="tel:0508699828" className="text-cyan-400 hover:underline" dir="ltr">050-869-9828</a></p>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-white mb-3">8. יצירת קשר</h2>
           <p className="text-slate-400">לשאלות בנוגע למדיניות פרטיות זו:<br />
-          אימייל: <a href="mailto:info@3ai.co.il" className="text-cyan-400 hover:underline">info@3ai.co.il</a><br />
           טלפון: <a href="tel:0508699828" className="text-cyan-400 hover:underline" dir="ltr">050-869-9828</a><br />
+          וואטסאפ: <a href="https://wa.me/972508699828" className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">wa.me/972508699828</a><br />
           כתובת: תל אביב, ישראל</p>
         </section>
 

@@ -173,8 +173,8 @@ export default function Footer() {
             <span>בתל אביב, ישראל</span>
           </div>
           <div className="flex items-center gap-4">
-            <span>info@3ai.co.il</span>
-            <span dir="ltr">050-869-9828</span>
+            <a href="https://wa.me/972508699828" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">WhatsApp</a>
+            <a href="tel:0508699828" className="hover:text-cyan-400 transition-colors" dir="ltr">050-869-9828</a>
           </div>
         </div>
       </div>

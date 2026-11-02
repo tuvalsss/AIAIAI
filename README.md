@@ -41,4 +41,3 @@ npm run dev
 ## פרטי יצירת קשר
 
 - טלפון / WhatsApp: 050-869-9828 (https://wa.me/972508699828)
-- מייל: info@3ai.co.il
