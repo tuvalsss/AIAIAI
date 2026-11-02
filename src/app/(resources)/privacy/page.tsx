@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "מדיניות פרטיות | AIAIAI",
-  description: "מדיניות הפרטיות של AIAIAI - כיצד אנו אוספים, משתמשים ומגנים על המידע שלך.",
+  title: "מדיניות פרטיות",
+  description: "מדיניות הפרטיות של 3AI (AIAIAI): איזה מידע נאסף באתר ובדמו, איך הוא מאובטח, ואילו זכויות יש לך לפי חוק הגנת הפרטיות.",
+  alternates: { canonical: "/privacy" },
+  robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {
-  const updated = "1 במאי 2025";
+  const updated = "2 בנובמבר 2026";
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100" dir="rtl">

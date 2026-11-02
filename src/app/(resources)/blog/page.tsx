@@ -3,8 +3,10 @@ import { posts } from "@/lib/blog-posts";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "בלוג AI לעסקים | AIAIAI",
-  description: "מאמרים, מקרי בוחן וטיפים על אוטומציה ובינה מלאכותית לעסקים בישראל",
+  title: "בלוג: סוכני AI, MCP, חיבור למסדי נתונים ואוטומציה לעסקים",
+  description: "מדריכים ומקרי בוחן על סוכני AI לעסקים בישראל: שרתי MCP, חיבור AI למסד נתונים, בוט וואטסאפ, אבטחת מידע ואוטומציות.",
+  alternates: { canonical: "/blog" },
+  openGraph: { url: "/blog", title: "בלוג 3AI: סוכני AI וחיבורי מערכות לעסקים", type: "website" },
 };
 
 export default function BlogPage() {
@@ -23,7 +25,7 @@ export default function BlogPage() {
             ידע שמניע <span className="gradient-text">עסקים קדימה</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            מקרי בוחן, מדריכים ותובנות על AI ואוטומציה לעסקים בישראל
+            מדריכים על MCP, חיבור AI למסדי נתונים, אבטחת מידע ומקרי בוחן מעסקים בישראל
           </p>
         </div>
       </div>
@@ -45,7 +47,7 @@ export default function BlogPage() {
                   <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-slate-300">
                     {post.badge}
                   </span>
-                  <span className="text-xs text-slate-500">{post.date}</span>
+                  <time dateTime={post.isoDate} className="text-xs text-slate-500">{post.date}</time>
                 </div>
 
                 <h2 className="text-base font-bold text-white mb-3 leading-snug group-hover:text-cyan-400 transition-colors">

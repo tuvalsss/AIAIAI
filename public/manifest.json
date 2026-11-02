@@ -1,11 +1,11 @@
 {
-  "name": "AIAIAI – פתרונות AI לעסקים",
-  "short_name": "AIAIAI",
-  "description": "פתרונות AI לעסקים בישראל",
+  "name": "3AI – סוכני AI וחיבורי מערכות לעסקים",
+  "short_name": "3AI",
+  "description": "סוכני AI, בוט וואטסאפ, חיבורי API ו-MCP ומסדי נתונים לעסקים בישראל",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#030712",
-  "theme_color": "#00f5ff",
+  "theme_color": "#030712",
   "lang": "he",
   "dir": "rtl",
   "icons": [

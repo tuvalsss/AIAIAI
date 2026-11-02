@@ -4,55 +4,89 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
-  MessageSquare, BarChart3, Brain, Send, Bot, User,
-  TrendingUp, Users, Zap, Activity, Wifi, Sparkles,
-  ChevronDown, RefreshCw, CheckCircle, Star, Target,
+  MessageSquare, Brain, Send, Bot,
+  Zap, Wifi, Sparkles,
+  RefreshCw, CheckCircle, Star, Target,
   Building2, ShoppingCart, Stethoscope, Scale, Coffee,
-  Loader2, ArrowRight, Lightbulb,
+  Loader2, ArrowRight, Lightbulb, Database, ShieldCheck, Plug,
 } from "lucide-react";
+import {
+  chunkText, contentDraft, leadAnalysis, whatsappReply,
+  type ChatMsg, type DemoKind, type LeadResult,
+} from "@/lib/demo-engine";
+import { trackDemo } from "@/lib/analytics";
 
-// ─── Helper: call streaming API ──────────────────────────────────
-async function streamChat(
-  messages: { role: "user" | "assistant"; content: string }[],
-  systemPrompt: string,
-  onChunk: (text: string) => void
-) {
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages, systemPrompt }),
-  });
-  if (!res.body) return;
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    onChunk(decoder.decode(value, { stream: true }));
+// ─── Helper: call streaming API, with a local engine as a safety net ──
+type DemoPayload = {
+  demo: DemoKind;
+  messages?: ChatMsg[];
+  input?: string;
+  contentType?: string;
+  business?: string;
+  seed?: number;
+};
+
+function localAnswer(payload: DemoPayload): string {
+  switch (payload.demo) {
+    case "leads":
+      return JSON.stringify(leadAnalysis(payload.input ?? ""));
+    case "content":
+      return contentDraft(payload.contentType ?? "whatsapp", payload.business ?? "", payload.seed ?? 0);
+    default:
+      return whatsappReply(payload.messages ?? []);
+  }
+}
+
+async function typeOut(text: string, onChunk: (t: string) => void) {
+  await new Promise((r) => setTimeout(r, 600));
+  for (const c of chunkText(text)) {
+    onChunk(c);
+    await new Promise((r) => setTimeout(r, 25));
+  }
+}
+
+async function streamChat(payload: DemoPayload, onChunk: (text: string) => void) {
+  let received = false;
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok || !res.body) throw new Error(`status ${res.status}`);
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const text = decoder.decode(value, { stream: true });
+      if (text) { received = true; onChunk(text); }
+    }
+  } catch {
+    // Network or server failure: fall through to the local engine below.
+  }
+  if (!received) {
+    const text = localAnswer(payload);
+    if (payload.demo === "leads") onChunk(text);
+    else await typeOut(text, onChunk);
   }
 }
 
 // ─── WhatsApp Live Chat Demo ──────────────────────────────────────
-const WA_SYSTEM = `אתה בוט WhatsApp חכם של עסק ישראלי. השם שלך הוא "AIAI בוט".
-תפקידיך:
-1. ענה על שאלות לקוחות בעברית מושלמת, בצורה קצרה ועניינית (2-4 משפטים מקסימום)
-2. הצע קביעת תור כשרלוונטי
-3. כלול אמוג'י מתאים
-4. הצג את עצמך כ-AI שזמין 24/7
-אל תציג רשימות ארוכות. ענה כמו WhatsApp: קצר, ידידותי, מקצועי.`;
-
-type Msg = { from: "user" | "bot"; text: string };
+// `time` is set only for messages created in the browser, so server and client HTML match.
+type Msg = { from: "user" | "bot"; text: string; time?: string };
+const now = () => new Date().toLocaleTimeString("he-IL", { hour: "2-digit", minute: "2-digit" });
 
 const QUICK_REPLIES = [
   "מה השירותים שלכם?",
+  "אפשר לחבר את זה ל-CRM שלי?",
   "כמה עולה בוט WhatsApp?",
-  "אפשר לקבוע פגישה?",
-  "תן לי דוגמה לאיך זה עובד",
+  "איך אתם שומרים על המידע שלי?",
 ];
 
 function WhatsAppDemo() {
   const [messages, setMessages] = useState<Msg[]>([
-    { from: "bot", text: "שלום! 👋 אני הבוט של 3AI, עוזר AI חכם שעובד 24/7.\nשלח לי הודעה ותראה איך AI אמיתי עונה לך!" },
+    { from: "bot", text: "היי 👋 אני סוכן ה-AI של 3AI. אני עונה 24/7, מבין עברית טבעית ומחובר למערכות של העסק.\nשאל אותי משהו, או ספר לי על העסק שלך." },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,28 +96,29 @@ function WhatsAppDemo() {
 
   useEffect(() => {
     if (!mountedRef.current) { mountedRef.current = true; return; }
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages, loading]);
 
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim() || loading) return;
-    const userMsg: Msg = { from: "user", text };
+    const userMsg: Msg = { from: "user", text, time: now() };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
 
-    const history = [...messages, userMsg]
+    const history: ChatMsg[] = [...messages, userMsg]
       .map((m) => ({ role: m.from === "user" ? "user" as const : "assistant" as const, content: m.text }));
+    trackDemo("whatsapp");
 
     let botText = "";
-    const botMsg: Msg = { from: "bot", text: "" };
+    const botMsg: Msg = { from: "bot", text: "", time: now() };
     setMessages((prev) => [...prev, botMsg]);
 
-    await streamChat(history, WA_SYSTEM, (chunk) => {
+    await streamChat({ demo: "whatsapp", messages: history }, (chunk) => {
       botText += chunk;
       setMessages((prev) => {
         const updated = [...prev];
-        updated[updated.length - 1] = { from: "bot", text: botText };
+        updated[updated.length - 1] = { ...botMsg, text: botText };
         return updated;
       });
     });
@@ -129,7 +164,7 @@ function WhatsAppDemo() {
             >
               <div className={`max-w-[85%] ${msg.from === "user" ? "msg-sent" : "msg-received"} p-3 text-sm text-white`}>
                 <p className="whitespace-pre-line leading-relaxed">{msg.text}</p>
-                <div className="text-[10px] text-slate-500 mt-1 text-left">{new Date().toLocaleTimeString("he-IL", { hour: "2-digit", minute: "2-digit" })}</div>
+                {msg.time && <div className="text-[10px] text-slate-500 mt-1 text-left">{msg.time}</div>}
               </div>
             </motion.div>
           ))}
@@ -195,20 +230,6 @@ function WhatsAppDemo() {
 }
 
 // ─── AI Lead Scorer Demo ──────────────────────────────────────────
-const LEAD_SYSTEM = `אתה מערכת AI לניהול לידים של חברת AIAIAI.
-כאשר מקבלים תיאור של ליד עסקי, תנתח אותו ותחזיר JSON בדיוק בפורמט הזה (ללא טקסט נוסף):
-{
-  "score": 87,
-  "status": "חם",
-  "urgency": "גבוהה",
-  "potential": "₪8,000-15,000/חודש",
-  "insights": ["תובנה 1 קצרה", "תובנה 2 קצרה", "תובנה 3 קצרה"],
-  "nextAction": "פעולה מיידית אחת מומלצת",
-  "aiMessage": "הודעת WhatsApp מותאמת ללקוח (2 שורות)"
-}
-score בין 0-100. status: "חם"/"פושר"/"קר". urgency: "גבוהה"/"בינונית"/"נמוכה".
-insights: 3 תובנות קצרות מאוד (עד 8 מילים כל אחת).`;
-
 const BUSINESS_EXAMPLES = [
   { icon: Coffee, label: "מסעדה", prompt: "בעל מסעדה, 15 שולחנות, מתלונן שמפסיד לקוחות בלילה כי אין מי שיענה לטלפון. רוצה פתרון WhatsApp." },
   { icon: Stethoscope, label: "קליניקה", prompt: "רופאת עור פרטית, 3 מטפלות, 80 תורים בשבוע. מבלה 3 שעות ביום על תיאום תורים טלפוני. מחפשת אוטומציה." },
@@ -216,16 +237,6 @@ const BUSINESS_EXAMPLES = [
   { icon: Scale, label: "עו\"ד", prompt: "משרד עורכי דין, 4 עורכי דין, מאבד לידים כי לא מחזיר שיחות מהר מספיק. רוצה מערכת שתסנן ותתעדף פניות." },
   { icon: Building2, label: "נדל\"ן", prompt: "סוכן נדל\"ן עצמאי, 30 נכסים פעילים, מבקר 20 נכסים בשבוע. צריך מערכת שתנהל פניות לקוחות ותקבע סיורים." },
 ];
-
-type LeadResult = {
-  score: number;
-  status: string;
-  urgency: string;
-  potential: string;
-  insights: string[];
-  nextAction: string;
-  aiMessage: string;
-};
 
 function LeadScorerDemo() {
   const [selected, setSelected] = useState<typeof BUSINESS_EXAMPLES[0] | null>(null);
@@ -239,18 +250,24 @@ function LeadScorerDemo() {
     setResult(null);
     setError("");
     let raw = "";
-    await streamChat(
-      [{ role: "user", content: `נתח את הליד הבא:\n${prompt}` }],
-      LEAD_SYSTEM,
-      (chunk) => { raw += chunk; }
-    );
+    const started = Date.now();
+    await streamChat({ demo: "leads", input: prompt }, (chunk) => { raw += chunk; });
+    let parsed: LeadResult | null = null;
     try {
       const match = raw.match(/\{[\s\S]*\}/);
-      if (match) setResult(JSON.parse(match[0]));
-      else setError("שגיאה בפענוח תוצאה");
+      if (match) {
+        const obj = JSON.parse(match[0]) as Partial<LeadResult>;
+        if (typeof obj.score === "number" && Array.isArray(obj.insights)) parsed = obj as LeadResult;
+      }
     } catch {
-      setError("שגיאה בניתוח");
+      parsed = null;
     }
+    // Malformed model output: the local analysis keeps the demo moving.
+    if (!parsed) parsed = leadAnalysis(prompt);
+    // Keep the "analysing" state visible for a moment so the result feels earned.
+    const elapsed = Date.now() - started;
+    if (elapsed < 1800) await new Promise((r) => setTimeout(r, 1800 - elapsed));
+    setResult(parsed);
     setLoading(false);
   };
 
@@ -425,27 +442,14 @@ function LeadScorerDemo() {
 }
 
 // ─── AI Content Generator Demo ─────────────────────────────────────
-const CONTENT_SYSTEM = `אתה מומחה לשיווק דיגיטלי ו-AI לעסקים ישראליים.
-כאשר מבקשים ממך לכתוב תוכן, תכתוב בדיוק את הפורמט המבוקש, בעברית שיווקית חדה.
-אל תוסיף הסברים. רק את התוכן עצמו.`;
-
 const CONTENT_TYPES = [
-  { id: "whatsapp", label: "הודעת WhatsApp", icon: MessageSquare, color: "text-green-400",
-    prompt: (biz: string) => `כתוב הודעת WhatsApp שיווקית לעסק מסוג "${biz}".
-חייב להיות: שורת פתיחה מושכת, 2-3 יתרונות עם אמוג'י, קריאה לפעולה ברורה.
-סה"כ עד 100 מילים. כתוב רק את ההודעה, בלי כותרות.` },
-  { id: "followup", label: "פולואו-אפ ליד", icon: ArrowRight, color: "text-cyan-400",
-    prompt: (biz: string) => `כתוב הודעת פולואו-אפ ל"${biz}" ללקוח שפנה אתמול ועדיין לא ענה.
-טון: ידידותי, לא לחוץ. הוסף הצעת ערך חדשה שלא הוזכרה קודם. עד 60 מילים.` },
-  { id: "review", label: "בקשת ביקורת", icon: Star, color: "text-yellow-400",
-    prompt: (biz: string) => `כתוב הודעת WhatsApp לבקשת ביקורת Google מלקוח מרוצה של "${biz}".
-חייב לכלול: תודה, בקשה מנומסת, הדגשת חשיבות לעסק, לינק placeholder. עד 60 מילים.` },
-  { id: "offer", label: "מבצע מיוחד", icon: Zap, color: "text-violet-400",
-    prompt: (biz: string) => `כתוב הודעת WhatsApp על מבצע מיוחד לעסק "${biz}".
-הוסף: תחושת דחיפות, הנחה ספציפית (המצא אחת שהגיונית), תאריך תפוגה. עד 70 מילים.` },
+  { id: "whatsapp", label: "הודעת WhatsApp", icon: MessageSquare, color: "text-green-400" },
+  { id: "followup", label: "פולואו-אפ ליד", icon: ArrowRight, color: "text-cyan-400" },
+  { id: "review", label: "בקשת ביקורת", icon: Star, color: "text-yellow-400" },
+  { id: "offer", label: "מבצע מיוחד", icon: Zap, color: "text-violet-400" },
 ];
 
-const BUSINESSES = ["מסעדה", "קליניקת יופי", "עורך דין", "חנות בגדים", "מכון כושר", "שיפוצניק"];
+const BUSINESSES = ["מסעדה", "קליניקת יופי", "עורך דין", "חנות אונליין", "מכון כושר", "שיפוצניק"];
 
 function ContentDemo() {
   const [bizType, setBizType] = useState("");
@@ -453,14 +457,15 @@ function ContentDemo() {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const seedRef = useRef(0);
 
   const generate = async () => {
     if (!bizType || loading) return;
     setLoading(true);
     setResult("");
+    const seed = seedRef.current++;
     await streamChat(
-      [{ role: "user", content: contentType.prompt(bizType) }],
-      CONTENT_SYSTEM,
+      { demo: "content", contentType: contentType.id, business: bizType, seed },
       (chunk) => setResult((prev) => prev + chunk)
     );
     setLoading(false);
@@ -642,7 +647,7 @@ export default function Demo() {
             <span className="gradient-text">בזמן אמת</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            לא סימולציה. AI אמיתי שמגיב לך עכשיו. תכתוב, תשאל, ותראה בעצמך.
+            אותו מנוע שאנחנו מחברים ל-WhatsApp, ל-CRM ולמסד הנתונים של הלקוחות שלנו. תכתוב, תשאל, ותראה בעצמך.
           </p>
         </motion.div>
 
@@ -735,7 +740,7 @@ export default function Demo() {
             className="mt-4 text-center"
           >
             <p className="text-xs text-slate-500">
-              מופעל על ידי <span className="text-cyan-400 font-medium">Claude AI</span> של Anthropic. אותה טכנולוגיה שנבנה עבור העסק שלך
+              מופעל על ידי <span className="text-cyan-400 font-medium">Claude AI</span> של Anthropic. בפרויקט אמיתי הסוכן מחובר גם למערכות שלך ושולף נתונים בזמן אמת
             </p>
           </motion.div>
         </motion.div>
@@ -748,10 +753,10 @@ export default function Demo() {
           className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
         >
           {[
-            { label: "עסקים פעילים", value: "500+", icon: Building2, color: "text-cyan-400" },
-            { label: "שיחות AI ביום", value: "12K+", icon: MessageSquare, color: "text-green-400" },
-            { label: "חיסכון שעות/שבוע", value: "40+", icon: Zap, color: "text-violet-400" },
-            { label: "שביעות רצון", value: "98%", icon: Star, color: "text-yellow-400" },
+            { label: "זמן מענה ממוצע", value: "< 3 שנ׳", icon: Zap, color: "text-cyan-400" },
+            { label: "חיבור למערכות", value: "API + MCP", icon: Plug, color: "text-green-400" },
+            { label: "שליפת נתונים חיה", value: "DB", icon: Database, color: "text-violet-400" },
+            { label: "הרשאות והצפנה", value: "מאובטח", icon: ShieldCheck, color: "text-yellow-400" },
           ].map((stat) => (
             <div key={stat.label} className="glass rounded-xl p-4 border border-white/5 text-center">
               <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-2`} />

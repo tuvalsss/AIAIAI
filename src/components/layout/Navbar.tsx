@@ -12,6 +12,7 @@ import { useAbout } from "@/components/layout/AboutContext";
 const navLinks = [
   { label: "בית", href: "/" },
   { label: "שירותים", href: "#services" },
+  { label: "חיבורים ואבטחה", href: "#integrations" },
   { label: "דמו", href: "#demo" },
   { label: "למה אנחנו", href: "#why-us" },
   { label: "לקוחות", href: "#testimonials" },
@@ -38,16 +39,16 @@ function AboutModal({ onClose }: { onClose: () => void }) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
         <div className="relative z-10 text-center flex flex-col items-center gap-2">
           <Image src="/logo.png" alt="3AI לוגו" width={56} height={56} className="rounded-2xl shadow-lg" />
-          <div className="text-xs text-slate-400 font-medium">פתרונות AI לעסקים בישראל</div>
+          <div className="text-xs text-slate-400 font-medium">סוכני AI וחיבורי מערכות לעסקים בישראל</div>
         </div>
       </div>
 
       <div className="p-6 space-y-6">
         {/* Tagline */}
         <div className="text-center">
-          <h2 className="text-xl font-black text-white mb-2">הופכים עסקים ישראליים לעסקים חכמים</h2>
+          <h2 className="text-xl font-black text-white mb-2">AI שמחובר למערכות, לא עוד צ&apos;אטבוט</h2>
           <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
-            AIAIAI היא חברת AI ישראלית שמתמחה בבניית פתרונות אוטומציה ובינה מלאכותית לעסקים, מהקטנים ועד הגדולים.
+            3AI (AIAIAI) היא חברת פיתוח ישראלית מתל אביב שבונה סוכני AI, בוטים לוואטסאפ, שרתי MCP וחיבורי API למערכות ולמסדי נתונים של עסקים, עם אבטחה והרשאות מהיום הראשון.
           </p>
         </div>
 
@@ -55,9 +56,9 @@ function AboutModal({ onClose }: { onClose: () => void }) {
         <div className="grid grid-cols-2 gap-3">
           {[
             { icon: MapPin, label: "ממוקמים", value: "תל אביב, ישראל", color: "text-cyan-400" },
-            { icon: Users, label: "עובדים עם", value: "עסקים קטנים וגדולים", color: "text-green-400" },
-            { icon: Building2, label: "לקוחות", value: "500+ עסקים פעילים", color: "text-violet-400" },
-            { icon: Heart, label: "מאז", value: "2022, 3 שנות ניסיון", color: "text-pink-400" },
+            { icon: Users, label: "עובדים עם", value: "עסקים קטנים, בינוניים וארגונים", color: "text-green-400" },
+            { icon: Building2, label: "מתמחים ב", value: "MCP, API, מסדי נתונים", color: "text-violet-400" },
+            { icon: Heart, label: "מודלים", value: "Claude, OpenAI, Gemini", color: "text-pink-400" },
           ].map((item) => (
             <div key={item.label} className="glass rounded-xl p-3 border border-white/10 flex items-center gap-3">
               <item.icon className={`w-5 h-5 flex-shrink-0 ${item.color}`} />
@@ -77,10 +78,10 @@ function AboutModal({ onClose }: { onClose: () => void }) {
           </h3>
           <div className="space-y-2">
             {[
-              "עסקים קטנים ובינוניים: מספרות, קליניקות, מסעדות, חנויות",
-              "חברות SaaS וסטארטאפים שצריכים אוטומציה מהירה",
-              "עסקי נדל\"ן, עורכי דין, רואי חשבון ומשרדי שירותים",
-              "חברות גדולות שצריכות AI פנימי לצוות שלהן",
+              "עסקים שמקבלים הרבה פניות: קליניקות, מסעדות, חנויות, שירות",
+              "חברות SaaS וסטארטאפים שרוצים לחבר AI למוצר או למסד הנתונים",
+              "משרדי עורכי דין, רואי חשבון, נדל\"ן ושירותים מקצועיים",
+              "ארגונים שצריכים AI פנימי עם הרשאות, SSO ואבטחה",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -93,9 +94,9 @@ function AboutModal({ onClose }: { onClose: () => void }) {
         {/* Values */}
         <div className="grid grid-cols-3 gap-2 text-center">
           {[
-            { label: "ישראלים", desc: "צוות מקומי, תמיכה בעברית" },
-            { label: "מהירים", desc: "תוצאות ראשונות ב-48 שעות" },
-            { label: "מחויבים", desc: "שותפים לטווח ארוך" },
+            { label: "מחוברים", desc: "API, MCP ומסדי נתונים" },
+            { label: "מאובטחים", desc: "הרשאות, הצפנה ולוג" },
+            { label: "מהירים", desc: "פתרון ראשון תוך ימים" },
           ].map((v) => (
             <div key={v.label} className="glass rounded-xl p-3 border border-white/10">
               <div className="text-sm font-black gradient-text mb-1">{v.label}</div>
@@ -109,7 +110,7 @@ function AboutModal({ onClose }: { onClose: () => void }) {
           className="w-full btn-primary flex items-center justify-center gap-2 py-3"
         >
           <Zap className="w-4 h-4" />
-          בואו נדבר, ייעוץ ראשון חינם
+          בואו נדבר, שיחת אפיון חינם
         </button>
       </div>
     </div>
@@ -176,12 +177,12 @@ export default function Navbar() {
               onClick={() => isHome ? window.scrollTo({ top: 0, behavior: "smooth" }) : router.push("/")}
               onKeyDown={(e) => e.key === "Enter" && (isHome ? window.scrollTo({ top: 0, behavior: "smooth" }) : router.push("/"))}
             >
-              <Image src="/logo.png" alt="3AI לוגו" width={48} height={48} className="rounded-xl" priority />
+              <Image src="/logo.png" alt="3AI לוגו" width={48} height={48} className="rounded-xl" priority sizes="48px" />
               <div className="text-right">
                 <div className="text-lg font-black text-white leading-none tracking-wider">
                   AI<span className="text-cyan-400">AI</span>AI
                 </div>
-                <div className="text-[10px] text-slate-400 font-medium leading-none">פתרונות AI</div>
+                <div className="text-[10px] text-slate-400 font-medium leading-none">סוכני AI לעסקים</div>
               </div>
             </motion.div>
 

@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Star, Quote, ChevronRight, ChevronLeft } from "lucide-react";
 
 const testimonials = [
@@ -12,7 +11,6 @@ const testimonials = [
     role: "בעל מסעדת השף",
     business: "מסעדנות",
     avatar: "ד",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-orange-500 to-red-600",
     rating: 5,
     text: "לפני AIAIAI הייתי מפסיד לפחות 30 שיחות ביום כי לא הספקתי לענות. היום הבוט עונה לכולם, מקבל הזמנות, ועוד שולח תזכורות. הכנסות המסעדה עלו ב-40% תוך 3 חודשים.",
@@ -23,7 +21,6 @@ const testimonials = [
     role: "מנהלת קליניקת יופי",
     business: "קוסמטיקה ויופי",
     avatar: "ר",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-pink-500 to-rose-600",
     rating: 5,
     text: "הבנתי שאני מבזבזת 3 שעות ביום רק על קביעת תורים. עם AIAIAI כל זה קורה אוטומטית בוואטסאפ. עכשיו אני מתרכזת בלקוחות שלפניי ולא בטלפון.",
@@ -34,7 +31,6 @@ const testimonials = [
     role: "מתווך נדל\"ן",
     business: "נדל\"ן",
     avatar: "י",
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-blue-500 to-indigo-600",
     rating: 5,
     text: "בנדל\"ן הכל עניין של מהירות. הסוכן AI שלי עונה ללידים תוך 30 שניות, מסנן רציניים מלא-רציניים, ומעביר אלי רק את הלקוחות החמים. אחוזי הסגירה שלי קפצו ב-65%.",
@@ -45,7 +41,6 @@ const testimonials = [
     role: "עורכת דין",
     business: "משרד עורכי דין",
     avatar: "מ",
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-violet-500 to-purple-600",
     rating: 5,
     text: "הלקוחות שלי צריכים מענה מהיר ומקצועי. ה-AI של 3AI עונה על שאלות שגרתיות, אוסף פרטים ראשוניים ומתאם פגישות. הכל לפני שאני בכלל מסתכלת על הטלפון.",
@@ -56,7 +51,6 @@ const testimonials = [
     role: "מנכ\"ל חברת שירות",
     business: "שירותי תחזוקה",
     avatar: "א",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-teal-500 to-cyan-600",
     rating: 5,
     text: "ניהלתי 15 טכנאים בלי מערכת סדורה. היום יש לי dashboard שמראה כל קריאה, כל טכנאי וכל לקוח. הבוט בוואטסאפ מטפל ב-80% מהפניות לבד. שינוי חיים ממש.",
@@ -67,7 +61,6 @@ const testimonials = [
     role: "מנהלת חנות אונליין",
     business: "eCommerce",
     avatar: "ש",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face&q=80",
     color: "from-green-500 to-emerald-600",
     rating: 5,
     text: "פתחתי חנות אונליין ולא ידעתי איך לנהל את שירות הלקוחות. 3AI הקים לי בוט שעונה על שאלות על מוצרים, משלוחים והחזרות. 24/7 ובלי להוסיף עובדים.",
@@ -121,7 +114,7 @@ export default function Testimonials() {
             עסקים ישראלים שכבר{" "}
             <span className="gradient-text">שינו את הדרך</span>
           </h2>
-          <p className="text-slate-400 text-lg">תוצאות אמיתיות, לקוחות אמיתיים</p>
+          <p className="text-slate-400 text-lg">מה בעלי עסקים מספרים אחרי שחיברנו להם AI למערכות</p>
         </motion.div>
 
         {/* Featured testimonial */}
@@ -153,13 +146,8 @@ export default function Testimonials() {
 
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-4">
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${testimonials[active].color} overflow-hidden relative flex-shrink-0`}>
-                      <Image
-                        src={testimonials[active].photo}
-                        alt={testimonials[active].name}
-                        fill
-                        className="object-cover"
-                      />
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${testimonials[active].color} flex items-center justify-center flex-shrink-0 text-2xl font-black text-white`} aria-hidden="true">
+                      {testimonials[active].avatar}
                     </div>
                     <div>
                       <div className="font-bold text-white text-lg">{testimonials[active].name}</div>
@@ -169,7 +157,7 @@ export default function Testimonials() {
                   </div>
                   <div className="glass rounded-xl px-4 py-3 border border-green-500/20 text-center">
                     <div className="text-green-400 font-black text-lg">{testimonials[active].metric}</div>
-                    <div className="text-slate-500 text-xs">תוצאה מוכחת</div>
+                    <div className="text-slate-500 text-xs">התוצאה שדווחה</div>
                   </div>
                 </div>
               </motion.div>
@@ -211,8 +199,8 @@ export default function Testimonials() {
                 i === active ? "border-cyan-500/40 bg-cyan-500/5" : "border-white/5 hover:border-white/20"
               }`}
             >
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${t.color} overflow-hidden relative mx-auto mb-2`}>
-                <Image src={t.photo} alt={t.name} fill className="object-cover" />
+              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${t.color} flex items-center justify-center mx-auto mb-2 text-lg font-black text-white`} aria-hidden="true">
+                {t.avatar}
               </div>
               <div className="text-xs font-bold text-white">{t.name}</div>
               <div className="text-[10px] text-slate-500">{t.business}</div>

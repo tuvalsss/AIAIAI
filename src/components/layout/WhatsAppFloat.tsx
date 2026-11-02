@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { X, MessageCircle } from "lucide-react";
+import { X } from "lucide-react";
 
 export default function WhatsAppFloat() {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -30,7 +30,7 @@ export default function WhatsAppFloat() {
       </AnimatePresence>
 
       <motion.a
-        href="https://wa.me/9720508699828?text=שלום! אני מעוניין לשמוע על פתרונות AI לעסק שלי"
+        href="https://wa.me/972508699828?text=שלום! אני מעוניין לשמוע על פתרונות AI לעסק שלי"
         target="_blank"
         rel="noopener noreferrer"
         whileHover={{ scale: 1.1 }}

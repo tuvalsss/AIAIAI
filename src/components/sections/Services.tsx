@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Image from "next/image";
 import {
-  MessageSquare, Bot, BarChart3, Zap, Settings, Users,
-  Phone, Mail, Database, Workflow, Target, Brain,
-  ShieldCheck, TrendingUp, Calendar, Star, ArrowLeft,
-  CheckCircle, Clock, Headphones, BarChart2, MessageCircle,
+  MessageSquare, BarChart3, Zap, Settings, Users,
+  Database, Workflow, Brain, ShieldCheck, Calendar, Star, ArrowLeft,
+  CheckCircle, Clock, Plug, FileSearch, Lock, Server,
 } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 
@@ -20,7 +18,6 @@ type Service = {
   color: string;
   glow: string;
   badge: string | null;
-  image: string;
   stat: { value: string; label: string };
   details: {
     headline: string;
@@ -34,195 +31,189 @@ type Service = {
 const services: Service[] = [
   {
     icon: MessageSquare,
-    title: "בוט WhatsApp לעסקים",
-    description: "סוכן AI חכם בוואטסאפ שעונה ללקוחות 24/7, קובע תורים, מטפל בפניות ומוכר בשמך. בעברית מושלמת.",
-    features: ["מענה אוטומטי", "קביעת תורים", "מכירות AI", "CRM מובנה"],
+    title: "בוט WhatsApp מחובר לעסק",
+    description: "סוכן AI בוואטסאפ שעונה בעברית טבעית, קובע תורים ביומן האמיתי שלך, בודק סטטוס הזמנה במערכת ומעביר לנציג כשצריך.",
+    features: ["WhatsApp Business API", "קביעת תורים ביומן", "סטטוס מהמערכת", "העברה לנציג"],
     color: "from-green-500 to-emerald-600",
     glow: "rgba(34,197,94,0.2)",
-    badge: "הכי פופולרי",
-    image: "https://images.unsplash.com/photo-1611746869696-d09bce200020?w=600&q=80",
-    stat: { value: "+40%", label: "הכנסות בממוצע" },
+    badge: "הכי מבוקש",
+    stat: { value: "24/7", label: "מענה תוך שניות" },
     details: {
-      headline: "הלקוחות שלך מחכים לתשובה. הבוט שלנו לא ישן",
-      body: "בוט ה-WhatsApp שלנו הוא סוכן AI מלא המשולב ישירות לחשבון הוואטסאפ העסקי שלך. הוא מבין עברית טבעית, עונה בתוך שניות, ומנהל שיחה מלאה מהפנייה הראשונה ועד קביעת תור וסגירת עסקה.",
+      headline: "לא בוט של תפריטים. סוכן שיודע מה קורה אצלך במערכת",
+      body: "הבוט מחובר לחשבון ה-WhatsApp Business הרשמי שלך ולמערכות שמאחוריו: יומן, CRM, מערכת הזמנות או מסד נתונים. כשלקוח שואל \"יש תור ביום חמישי?\" הוא בודק זמינות אמיתית, קובע, שולח אישור ומעדכן את היומן. כשהשאלה חורגת מההרשאות שלו, הוא מעביר לאדם עם סיכום.",
       bullets: [
-        "מענה מיידי 24/7, גם בשישי בלילה וגם בחגים",
-        "קביעת תורים אוטומטית עם שליחת אישור ותזכורות",
-        "זיהוי לקוח חוזר ומענה מותאם אישית",
-        "העברה חלקה לנציג אנושי כשנדרש",
-        "דוחות שבועיים: כמה שיחות, כמה תורים, כמה לידים",
-        "אינטגרציה ל-CRM קיים (Monday, HubSpot, Salesforce ועוד)",
+        "חיבור רשמי ל-WhatsApp Business API של Meta, כולל אישור התבניות",
+        "קביעה, שינוי וביטול תורים מול Google Calendar, Outlook או מערכת התורים שלך",
+        "שליפת סטטוס הזמנה, יתרה או היסטוריית לקוח ממסד הנתונים בזמן אמת",
+        "זיהוי לקוח חוזר לפי מספר הטלפון ומענה מותאם",
+        "העברה לנציג אנושי עם תמלול וסיכום השיחה",
+        "דוח שבועי: שיחות, תורים, לידים ושאלות שלא נענו",
       ],
       process: [
-        { step: "ייעוץ", desc: "מבינים את העסק שלך ומה הלקוחות שואלים הכי הרבה" },
-        { step: "הגדרה", desc: "בונים את ה-flows, תשובות ואישיות הבוט" },
-        { step: "48 שעות", desc: "הבוט חי ועובד, ראשון להגיב בכל שיחה" },
-        { step: "אופטימיזציה", desc: "שיפור שוטף על בסיס נתוני שיחות אמיתיים" },
+        { step: "אפיון", desc: "מה הלקוחות שואלים ואילו מערכות צריך לחבר" },
+        { step: "חיבור", desc: "WhatsApp API, יומן, CRM ומסד הנתונים" },
+        { step: "השקה", desc: "הבוט חי, עם ניטור של כל שיחה" },
+        { step: "שיפור", desc: "כיוונון לפי שיחות אמיתיות" },
       ],
-      cta: "רוצה בוט לעסק שלך?",
+      cta: "רוצה בוט שמחובר למערכות שלך?",
     },
   },
   {
-    icon: Bot,
-    title: "סוכני AI לעסקים",
-    description: "מערכת סוכנים חכמים שעובדת בשבילך: מנתחת נתונים, מנהלת לקוחות, מתאמת פגישות ועוד.",
-    features: ["סוכן נתונים", "סוכן מכירות", "סוכן שירות", "סוכן אנליטיקס"],
+    icon: Server,
+    title: "חיבורי API ושרתי MCP",
+    description: "אנחנו בונים שרת MCP (Model Context Protocol) מעל המערכות שלך, כך שסוכני AI, Claude ו-ChatGPT יכולים לקרוא ולבצע פעולות בצורה מבוקרת.",
+    features: ["שרת MCP מותאם", "REST / GraphQL", "Webhooks", "הרשאות לכל כלי"],
     color: "from-cyan-500 to-blue-600",
     glow: "rgba(0,245,255,0.2)",
-    badge: null,
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
-    stat: { value: "127ש׳", label: "חיסכון שבועי" },
+    badge: "התמחות",
+    stat: { value: "MCP", label: "תקן חיבור פתוח" },
     details: {
-      headline: "צבא של AI שעובד בשבילך. בלי שכר, בלי חופשות",
-      body: "במקום לשכור עובדים נוספים לכל משימה, אנחנו בונים לך מערכת של סוכנים חכמים שמתמחים כל אחד בתחומו. הם עובדים ביחד, מעדכנים אחד את השני, ומדווחים לך רק על מה שצריך את תשומת לבך.",
+      headline: "ה-AI מקבל ידיים: כלים מוגדרים, לא גישה חופשית",
+      body: "MCP הוא התקן הפתוח שבו מודלים כמו Claude מתחברים למערכות חיצוניות. אנחנו ממפים את ה-API של המערכות שלך (CRM, ERP, חנות, מערכת פנימית) לכלים מוגדרים: \"חפש לקוח\", \"פתח קריאת שירות\", \"בדוק מלאי\". כל כלי מקבל הרשאה משלו, ולוג של כל קריאה.",
       bullets: [
-        "סוכן מכירות: עונה ללידים, שולח הצעות מחיר, מעקב אוטומטי",
-        "סוכן שירות: פותר בעיות, מחזיר לקוחות, מסנן תלונות",
-        "סוכן אנליטיקס: מנתח נתונים ושולח דוח שבועי בפורמט פשוט",
-        "סוכן תיאום: מסדר פגישות, שולח תזכורות, מנהל לוח זמנים",
-        "כל הסוכנים מדברים ביניהם ועובדים בתיאום מלא",
-        "Dashboard אחד לשליטה על כולם",
+        "שרת MCP שעובד עם Claude, ChatGPT, Cursor וכל סוכן שתומך בתקן",
+        "עטיפת API קיים (REST, GraphQL, SOAP) לכלים ברורים עם סכמות",
+        "Webhooks ו-event triggers: הזמנה חדשה, תשלום, טופס, הודעה",
+        "חיבור לפריוריטי, SAP Business One, Monday, HubSpot, Salesforce, Pipedrive",
+        "הרשאות per-tool: קריאה בלבד, כתיבה עם אישור, או אוטומטי לפי כללים",
+        "Rate limiting, retries ו-audit log על כל קריאה",
       ],
       process: [
-        { step: "מיפוי", desc: "מזהים אילו משימות אפשר לאוטמט אצלך" },
-        { step: "בנייה", desc: "בונים ומאמנים את הסוכנים לעסק שלך" },
-        { step: "חיבור", desc: "מחברים לכל הכלים הקיימים שלך" },
-        { step: "ניהול", desc: "מוניטור שוטף ושיפור מתמיד" },
+        { step: "מיפוי API", desc: "אילו פעולות ה-AI צריך לבצע" },
+        { step: "עיצוב כלים", desc: "סכמות, הרשאות וגבולות" },
+        { step: "פיתוח", desc: "שרת MCP ובדיקות אוטומטיות" },
+        { step: "ניטור", desc: "לוגים, התראות ושיפור" },
       ],
-      cta: "רוצה לראות דמו של הסוכנים?",
+      cta: "רוצה לחבר AI למערכת שלך?",
+    },
+  },
+  {
+    icon: Database,
+    title: "חיבור למסד נתונים ושליפת נתונים",
+    description: "סוכן AI ששואל את מסד הנתונים שלך בשפה טבעית: \"כמה הזמנות פתוחות יש מחיפה?\" ומקבל תשובה מדויקת, בהרשאות שהגדרת.",
+    features: ["Postgres / MySQL / Mongo", "Supabase / Firebase", "RAG על מסמכים", "Text-to-SQL מבוקר"],
+    color: "from-violet-500 to-purple-600",
+    glow: "rgba(124,58,237,0.2)",
+    badge: null,
+    stat: { value: "Live", label: "נתונים אמיתיים, לא ניחוש" },
+    details: {
+      headline: "תשובות מהנתונים שלך, לא מהדמיון של המודל",
+      body: "במקום שה-AI \"ינחש\", הוא שולף: שאילתות SQL מבוקרות על Postgres, MySQL, SQL Server או MongoDB, חיפוש סמנטי (RAG) על מסמכים, חוזים ונהלים, וחיבור ל-Supabase, Firebase או Google Sheets. כל שאילתה עוברת בשכבת הרשאות, ואפשר להגביל טבלאות, עמודות ושורות לכל משתמש.",
+      bullets: [
+        "Text-to-SQL עם רשימת טבלאות מאושרת ו-read-only כברירת מחדל",
+        "Row Level Security: כל לקוח או עובד רואה רק את מה שמותר לו",
+        "RAG: חיפוש במסמכים פנימיים, נהלים, מחירונים וחוזים עם ציטוט המקור",
+        "חיבור ל-Supabase, Firebase, Google Sheets, Airtable ו-Excel",
+        "סנכרון נתונים בין מערכות, עם זיהוי כפילויות וניקוי",
+        "שכבת מטמון כדי שהתשובות יהיו מהירות וזולות",
+      ],
+      process: [
+        { step: "סכמה", desc: "מיפוי הטבלאות והנתונים הרגישים" },
+        { step: "הרשאות", desc: "מי רואה מה, ומה אסור" },
+        { step: "חיבור", desc: "שאילתות, RAG ובדיקות דיוק" },
+        { step: "ממשק", desc: "WhatsApp, Slack, דשבורד או API" },
+      ],
+      cta: "רוצה ש-AI יענה מהנתונים שלך?",
     },
   },
   {
     icon: Workflow,
-    title: "אוטומציות עסקיות",
-    description: "הפסק לבזבז שעות על משימות חוזרות. אנחנו מחברים את כל המערכות שלך ומאפשרים להן לעבוד אוטומטית.",
-    features: ["API חיבורים", "זרמי עבודה", "טריגרים חכמים", "דוחות אוטומטיים"],
-    color: "from-violet-500 to-purple-600",
-    glow: "rgba(124,58,237,0.2)",
+    title: "אוטומציות בין מערכות",
+    description: "טופס באתר פותח כרטיס ב-CRM, שולח WhatsApp, מעדכן גיליון ומתזכר אותך. אנחנו בונים את הזרימות ב-n8n, Make או בקוד.",
+    features: ["n8n / Make / Zapier", "קוד מותאם", "טריגרים חכמים", "דוחות אוטומטיים"],
+    color: "from-orange-500 to-red-600",
+    glow: "rgba(249,115,22,0.2)",
     badge: null,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-    stat: { value: "80%", label: "פחות עבודה ידנית" },
+    stat: { value: "0", label: "הקלדה ידנית כפולה" },
     details: {
-      headline: "כשמערכת אחת מסיימת, השנייה מתחילה אוטומטית",
-      body: "אנחנו מחברים את כל הכלים שלך: CRM, Gmail, WhatsApp, Google Sheets, Monday, Slack ועוד - ובונים flows חכמים שעובדים לבד. לקוח ממלא טופס? יוצא אימייל, נפתח כרטיס, ומשלוח SMS. הכל תוך שניות.",
+      headline: "כשמערכת אחת מסיימת, השנייה מתחילה לבד",
+      body: "אנחנו מחברים את הכלים שכבר יש לך: CRM, Gmail, WhatsApp, Google Sheets, Monday, Slack, מערכת חשבוניות, ובונים זרימות שעובדות לבד. כשהלוגיקה מורכבת מדי ל-Make או n8n, כותבים קוד. בכל מקרה: ניטור, התראות על כשלים ו-retry אוטומטי.",
       bullets: [
-        "חיבור לכל מערכת דרך API: Make, Zapier, n8n, קוד מלא",
-        "טריגרים אוטומטיים: טופס / תשלום / הודעה = פעולה מיידית",
-        "דוחות אוטומטיים כל שבוע/חודש לאימייל שלך",
-        "גיבוי וסנכרון נתונים בין מערכות",
-        "התראות חכמות כשמשהו דורש תשומת לבך",
-        "בנייה מותאמת לכל סדר עבודה ייחודי",
+        "ליד נכנס → ציון AI → כרטיס ב-CRM → הודעת WhatsApp → תזכורת לנציג",
+        "תשלום מאושר → חשבונית → עדכון מלאי → הודעה ללקוח",
+        "דוח שבועי אוטומטי ל-WhatsApp או למייל עם ניתוח AI",
+        "סנכרון דו-כיווני בין מערכות שלא מדברות זו עם זו",
+        "התראה כשמשהו נתקע, ולא גילוי בעוד חודש",
+        "תיעוד מלא של כל זרימה כדי שלא תהיה תלוי בנו",
       ],
       process: [
-        { step: "אבחון", desc: "מזהים איפה אתה מבזבז הכי הרבה זמן" },
-        { step: "מיפוי flows", desc: "מתכננים את זרמי העבודה החדשים" },
-        { step: "חיבור", desc: "מחברים את המערכות ובונים את האוטומציות" },
-        { step: "בדיקה", desc: "ריצה מלאה + תיקונים לפני השקה" },
+        { step: "אבחון", desc: "איפה הזמן הולך לאיבוד" },
+        { step: "תכנון", desc: "מיפוי הזרימות והטריגרים" },
+        { step: "בנייה", desc: "n8n / Make / קוד + בדיקות" },
+        { step: "השקה", desc: "ניטור והתראות" },
       ],
-      cta: "רוצה לחסוך 20+ שעות בשבוע?",
+      cta: "רוצה לחסוך שעות כל שבוע?",
     },
   },
   {
     icon: BarChart3,
-    title: "Dashboard AI",
-    description: "לוח בקרה בזמן אמת עם AI analytics שמסביר לך מה קורה בעסק ומה לעשות הלאה.",
-    features: ["BI אמיתי", "תחזיות AI", "KPIs חכמים", "התראות חכמות"],
-    color: "from-orange-500 to-red-600",
-    glow: "rgba(249,115,22,0.2)",
-    badge: null,
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80",
-    stat: { value: "3×", label: "מהירות קבלת החלטות" },
-    details: {
-      headline: "תפסיק לנחש. תתחיל לדעת.",
-      body: "ה-Dashboard שלנו אוסף נתונים מכל מקורות העסק שלך: מכירות, שיחות, לידים ותורים - ומציג לך תמונה ברורה בזמן אמת. ה-AI לא רק מציג גרפים. הוא מסביר מה המשמעות ומה לעשות הלאה.",
-      bullets: [
-        "KPIs בזמן אמת: הכנסות, לידים, המרה, שביעות רצון",
-        "תחזיות AI: מה צפוי להיות בחודש הבא בהתבסס על מגמות",
-        "התראות חכמות: משהו ירד? מקבל הודעה מיידית",
-        "השוואה לתקופות קודמות בלחיצה אחת",
-        "גישה ממחשב, טאבלט וסמארטפון",
-        "דוח שבועי אוטומטי לאימייל שלך",
-      ],
-      process: [
-        { step: "מקורות", desc: "מחברים את כל מקורות הנתונים שלך" },
-        { step: "עיצוב", desc: "בונים dashboard מותאם לעסק שלך" },
-        { step: "AI layers", desc: "מוסיפים ניתוח חכם ותחזיות" },
-        { step: "הדרכה", desc: "מלמדים אותך לקרוא ולהשתמש בנתונים" },
-      ],
-      cta: "רוצה dashboard לעסק שלך?",
-    },
-  },
-  {
-    icon: Users,
-    title: "ניהול לידים AI",
-    description: "AI שמסנן, מדרג ומטפל בלידים שלך ומוודא שאף לקוח פוטנציאלי לא הולך לאיבוד.",
-    features: ["סיווג לידים", "פולואו אפ אוטומטי", "CRM חיבור", "AI scoring"],
+    title: "Dashboard AI על הנתונים שלך",
+    description: "לוח בקרה שמושך נתונים מכל המערכות ומסביר בעברית מה קרה, למה, ומה כדאי לעשות. לא רק גרפים.",
+    features: ["נתונים בזמן אמת", "ניתוח AI בעברית", "התראות חכמות", "תחזיות"],
     color: "from-pink-500 to-rose-600",
     glow: "rgba(236,72,153,0.2)",
     badge: null,
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80",
-    stat: { value: "+65%", label: "אחוזי סגירה" },
+    stat: { value: "1", label: "מסך אחד לכל העסק" },
     details: {
-      headline: "אף ליד לא הולך לאיבוד. AI עוקב אחרי כולם",
-      body: "כשליד נכנס - ממודעה, מאתר או מוואטסאפ - ה-AI שלנו מסווג אותו מיד לפי פוטנציאל, שולח הודעת פתיחה, ובונה תוכנית מעקב מותאמת. אף ליד לא נשכח בגלל עומס.",
+      headline: "תפסיק לנחש. תתחיל לדעת",
+      body: "ה-Dashboard מתחבר למקורות הנתונים שלך (מכירות, שיחות, לידים, תורים, חשבונאות) ומציג תמונה אחת. שכבת ה-AI מוסיפה הסבר: \"ההמרה ירדה השבוע כי 40% מהלידים הגיעו מקמפיין חדש עם איכות נמוכה\". עם התראות ב-WhatsApp כשמשהו חורג.",
       bullets: [
-        "AI scoring: כל ליד מקבל ציון 0-100 לפי פוטנציאל",
-        "מענה אוטומטי ראשוני תוך 30 שניות מהפנייה",
-        "פולואו-אפ חכם: SMS, WhatsApp ואימייל לפי מה שעובד",
-        "חיבור ל-CRM: Monday, HubSpot, Pipedrive ועוד",
-        "התראה כשליד חם, תדע בדיוק מתי לחייג",
-        "סטטיסטיקות: איפה הלידים הטובים ביותר מגיעים",
+        "KPIs בזמן אמת: הכנסות, לידים, המרה, זמני מענה, שביעות רצון",
+        "ניתוח AI בעברית שמסביר את המספרים ומציע פעולה",
+        "התראות ב-WhatsApp או Slack כשמדד חורג מהצפוי",
+        "תחזיות לחודש הבא על בסיס מגמות",
+        "גישה לפי תפקיד: בעלים, מנהל, נציג",
+        "דוח שבועי אוטומטי בפורמט שאפשר להעביר הלאה",
       ],
       process: [
-        { step: "מקורות", desc: "מחברים את כל ערוצי הלידים שלך" },
-        { step: "הגדרת קריטריונים", desc: "מה מגדיר 'ליד טוב' בעסק שלך" },
-        { step: "אוטומציות", desc: "בונים flows מותאמים לכל סוג ליד" },
-        { step: "ניטור", desc: "עוקבים אחר תוצאות ומשפרים" },
+        { step: "מקורות", desc: "חיבור לכל מקורות הנתונים" },
+        { step: "מודל", desc: "הגדרת המדדים שחשובים לך" },
+        { step: "AI", desc: "הסברים, התראות ותחזיות" },
+        { step: "הדרכה", desc: "איך לקרוא ולפעול לפי הנתונים" },
       ],
-      cta: "רוצה לסגור יותר עסקאות?",
+      cta: "רוצה לראות את העסק במסך אחד?",
     },
   },
   {
     icon: Brain,
-    title: "מערכות AI מותאמות",
-    description: "פיתוח מערכות AI על-פי הצרכים הייחודיים שלך: SaaS פנימי, ממשקים, לוגיקה עסקית מותאמת.",
-    features: ["פיתוח מלא", "SaaS פרטי", "API מותאם", "אינטגרציות"],
+    title: "מערכות AI מותאמות ואבטחה",
+    description: "פיתוח מלא של מערכת AI פנימית: ממשק לצוות, API משלך, סוכנים מרובים, עם אבטחה שמתאימה גם לארגונים מפוקחים.",
+    features: ["פיתוח מלא", "סוכנים מרובים", "SSO והרשאות", "חוק הגנת הפרטיות"],
     color: "from-teal-500 to-cyan-600",
     glow: "rgba(20,184,166,0.2)",
-    badge: "חדש",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
-    stat: { value: "∞", label: "אפשרויות" },
+    badge: "לארגונים",
+    stat: { value: "RLS", label: "הרשאות ברמת שורה" },
     details: {
-      headline: "יש לך רעיון? אנחנו הופכים אותו למציאות",
-      body: "לא כל עסק מתאים לפתרון קיים. אם יש לך צורך ייחודי: מערכת ניהול פנימית, כלי AI לצוות או ממשק מיוחד ללקוחות - אנחנו בונים אותו מאפס. מהרעיון ועד למוצר עובד.",
+      headline: "AI שמחלקת האבטחה שלך תאשר",
+      body: "כשפתרון מדף לא מספיק, אנחנו בונים מאפס: מערכת פנימית לצוות עם AI מובנה, סוכנים שעובדים ביחד, ממשק ללקוחות או API משלכם. האבטחה מובנית מהיום הראשון: הרשאות לפי תפקיד, הצפנה במנוחה ובתעבורה, סודות בכספת, לוג מלא, ואפשרות להריץ על תשתית שלכם.",
       bullets: [
-        "בניית SaaS פנימי לצוות שלך עם AI מובנה",
-        "פיתוח API מותאם לחיבור בין מערכות שלך",
-        "ממשק ניהול ייחודי לתהליכים מורכבים",
-        "אינטגרציה עם כל מערכת קיימת",
-        "אבטחה מלאה ועמידה בתקנות",
-        "תמיכה שוטפת ועדכונים לאחר השקה",
+        "ארכיטקטורה: Next.js, Node, Python, Postgres, Supabase, Vercel או ענן שלכם",
+        "הרשאות לפי תפקיד, Row Level Security ו-SSO (Google, Microsoft)",
+        "המידע לא משמש לאימון מודלים, עם הסכמי עיבוד נתונים (DPA)",
+        "עמידה בחוק הגנת הפרטיות (תיקון 13) ו-GDPR, כולל מחיקה לפי דרישה",
+        "בדיקות אבטחה: prompt injection, הזרקת SQL, דליפת סודות",
+        "תיעוד, העברת ידע ותמיכה שוטפת אחרי ההשקה",
       ],
       process: [
-        { step: "Discovery", desc: "מבינים לעומק מה אתה צריך ולמה" },
-        { step: "עיצוב", desc: "מתכננים את הארכיטקטורה והחוויה" },
-        { step: "פיתוח", desc: "בונים במהירות עם sprints קצרים" },
-        { step: "השקה", desc: "בדיקות, השקה ותמיכה מלאה" },
+        { step: "Discovery", desc: "צרכים, נתונים ודרישות אבטחה" },
+        { step: "ארכיטקטורה", desc: "תכנון המערכת וההרשאות" },
+        { step: "פיתוח", desc: "ספרינטים קצרים עם דמו כל שבוע" },
+        { step: "השקה", desc: "בדיקות אבטחה, הדרכה ותמיכה" },
       ],
-      cta: "ספר לנו על הרעיון שלך",
+      cta: "ספר לנו על המערכת שאתה צריך",
     },
   },
 ];
 
 const highlights = [
-  { icon: Calendar, text: "קביעת תורים אוטומטית" },
-  { icon: Phone, text: "שיחות AI קוליות" },
-  { icon: Mail, text: "אימיילים אוטומטיים" },
-  { icon: Database, text: "חיבור למסד נתונים" },
-  { icon: Target, text: "מיקוד קהל חכם" },
-  { icon: ShieldCheck, text: "אבטחה מלאה" },
-  { icon: TrendingUp, text: "אנליטיקס מתקדם" },
-  { icon: Settings, text: "הגדרות מלאות" },
+  { icon: Plug, text: "חיבור לכל API קיים" },
+  { icon: Database, text: "שליפה ממסד הנתונים" },
+  { icon: Calendar, text: "תיאום ביומן אמיתי" },
+  { icon: FileSearch, text: "חיפוש במסמכים (RAG)" },
+  { icon: Lock, text: "הרשאות ולוג פעולות" },
+  { icon: ShieldCheck, text: "חוק הגנת הפרטיות + GDPR" },
+  { icon: Users, text: "העברה לנציג אנושי" },
+  { icon: Settings, text: "ניטור והתראות" },
 ];
 
 function ServiceModal({ service, onClose }: { service: Service; onClose: () => void }) {
@@ -235,12 +226,11 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
 
   return (
     <div dir="rtl">
-      {/* Hero image */}
-      <div className="relative h-48 overflow-hidden">
-        <Image src={service.image} alt={service.title} fill className="object-cover opacity-60" />
+      <div className={`relative h-32 overflow-hidden bg-gradient-to-br ${service.color}`}>
+        <div className="absolute inset-0 grid-bg opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0f1e]" />
         <div className="absolute bottom-4 right-6">
-          <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-xl`}>
+          <div className="w-12 h-12 rounded-2xl bg-[#0a0f1e]/80 border border-white/20 flex items-center justify-center shadow-xl">
             <service.icon className="w-6 h-6 text-white" />
           </div>
         </div>
@@ -252,7 +242,6 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
       </div>
 
       <div className="p-6 space-y-5">
-        {/* Title + stat */}
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-black text-white mb-1">{service.title}</h2>
@@ -264,10 +253,8 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
           </div>
         </div>
 
-        {/* Body */}
         <p className="text-slate-300 text-sm leading-relaxed">{service.details.body}</p>
 
-        {/* Bullets */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {service.details.bullets.map((b, i) => (
             <div key={i} className="flex items-start gap-2">
@@ -277,7 +264,6 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
           ))}
         </div>
 
-        {/* Process */}
         <div>
           <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
             <Clock className="w-4 h-4 text-violet-400" />
@@ -296,11 +282,7 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
           </div>
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={scrollToContact}
-          className="w-full btn-primary flex items-center justify-center gap-2 py-3"
-        >
+        <button onClick={scrollToContact} className="w-full btn-primary flex items-center justify-center gap-2 py-3">
           <Zap className="w-4 h-4" />
           {service.details.cta}
         </button>
@@ -310,7 +292,7 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
 }
 
 export default function Services() {
-  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+  const { ref, inView } = useInView({ threshold: 0.05, triggerOnce: true });
   const [activeService, setActiveService] = useState<Service | null>(null);
 
   return (
@@ -318,55 +300,43 @@ export default function Services() {
       <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
 
-      {/* Service Modal */}
       <Modal open={!!activeService} onClose={() => setActiveService(null)}>
         {activeService && <ServiceModal service={activeService} onClose={() => setActiveService(null)} />}
       </Modal>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/30 rounded-full px-4 py-2 mb-4">
             <Zap className="w-4 h-4 text-violet-400" />
-            <span className="text-sm text-violet-300 font-medium">הפתרונות שלנו</span>
+            <span className="text-sm text-violet-300 font-medium">מה אנחנו בונים</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-            AI שעובד בשביל{" "}
-            <span className="gradient-text">העסק שלך</span>
+            AI שמדבר עם{" "}
+            <span className="gradient-text">המערכות שלך</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            מהבוט הראשון ועד לאוטומציה מלאה. אנחנו בונים את מערכת ה-AI שתשנה את הדרך שבה העסק שלך עובד.
+            מבוט WhatsApp ועד שרת MCP מעל ה-ERP. כל פתרון מחובר לנתונים האמיתיים של העסק, עם הרשאות ואבטחה מהיום הראשון.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {services.map((service, i) => (
-            <motion.div
+            <motion.article
               key={service.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="service-card glass glass-hover rounded-2xl overflow-hidden relative group"
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="service-card glass glass-hover rounded-2xl overflow-hidden relative group flex flex-col"
             >
-              {/* Image Header */}
-              <div className="relative h-36 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60"
-                />
+              <div className="relative h-28 overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-25 group-hover:opacity-40 transition-opacity duration-500`} />
+                <div className="absolute inset-0 grid-bg opacity-40" />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0f1e]" />
-                <div
-                  className="absolute inset-0 opacity-40"
-                  style={{ background: `linear-gradient(135deg, ${service.glow.replace("0.2", "0.3")}, transparent)` }}
-                />
 
                 {service.badge && (
                   <div className="absolute top-3 right-3 bg-cyan-500/90 backdrop-blur-sm rounded-full px-3 py-1 text-[11px] text-white font-bold">
@@ -375,7 +345,7 @@ export default function Services() {
                 )}
 
                 <div className="absolute bottom-3 left-3 glass rounded-xl px-3 py-1.5 border border-white/20">
-                  <div className={`text-lg font-black bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>{service.stat.value}</div>
+                  <div className={`text-lg font-black bg-gradient-to-r ${service.color} bg-clip-text text-transparent`} dir="ltr">{service.stat.value}</div>
                   <div className="text-[9px] text-slate-400">{service.stat.label}</div>
                 </div>
 
@@ -386,15 +356,9 @@ export default function Services() {
                 </div>
               </div>
 
-              {/* Glow on hover */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"
-                style={{ background: `radial-gradient(circle at 50% 30%, ${service.glow} 0%, transparent 70%)` }}
-              />
-
-              <div className="p-5">
+              <div className="p-5 flex flex-col flex-1">
                 <h3 className="text-lg font-bold text-white mb-2">{service.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">{service.description}</p>
+                <p className="text-slate-400 text-sm leading-relaxed mb-4 flex-1">{service.description}</p>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {service.features.map((f) => (
@@ -408,41 +372,34 @@ export default function Services() {
                   onClick={() => setActiveService(service)}
                   className={`flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5 bg-gradient-to-r ${service.color} bg-clip-text text-transparent hover:opacity-80`}
                 >
-                  למידע נוסף
+                  איך זה עובד
                   <ArrowLeft className="w-4 h-4" style={{ color: "rgba(0,245,255,0.8)" }} />
                 </button>
               </div>
 
               <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
-        {/* Highlights Bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.6 }}
           className="glass rounded-2xl p-6 border border-white/10"
         >
           <div className="flex items-center gap-3 mb-5">
             <Star className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-lg font-bold text-white">מה כלול בכל הפתרונות</h3>
+            <h3 className="text-lg font-bold text-white">כלול בכל פרויקט</h3>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {highlights.map((h, i) => (
-              <motion.div
-                key={h.text}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.9 + i * 0.05 }}
-                className="flex items-center gap-2 text-slate-300 text-sm"
-              >
+            {highlights.map((h) => (
+              <div key={h.text} className="flex items-center gap-2 text-slate-300 text-sm">
                 <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
                   <h.icon className="w-4 h-4 text-cyan-400" />
                 </div>
                 {h.text}
-              </motion.div>
+              </div>
             ))}
           </div>
         </motion.div>
